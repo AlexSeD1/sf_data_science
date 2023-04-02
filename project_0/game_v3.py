@@ -14,9 +14,9 @@ def random_predict(number:int=1) -> int:
         int: Число попыток
     """
 
-    count = 0
-    low = 1
-    high = 100
+    count = 0   # Задаем счетчик числа попыток
+    low = 1     # Задаем нижнюю границу диапазона поиска 
+    high = 100  # Задаем верхнюю границу диапазона поиска 
     
     while True:
         count += 1
@@ -41,20 +41,22 @@ def score_game(random_predict) -> int:
         int: среднее количество попыток
     """
 
-    count_ls = [] # список для сохранения количества попыток
+    
     np.random.seed(1) # фиксируем сид для воспроизводимости
     random_array = np.random.randint(1, 101, size=(1000)) # загадали список чисел
+    count = 0
+   
 
+    for number in random_array: # цикл для последовательного угадывания чисел в списке 
+         count += random_predict(number) # добавляем число попыток, которое потребовалось угадать текущее число
 
-    for number in random_array:
-        count_ls.append(random_predict(number))
+    score = int(count / 1000) # находим среднее количество попыток
 
-    score = int(np.mean(count_ls)) # находим среднее количество попыток
 
     print(f'Ваш алгоритм угадывает число в среднем за: {score} попыток')
     return(score)
 
 # RUN
-#score_game(random_predict)
+
 if __name__ == '__main__':
     score_game(random_predict)
